@@ -1,0 +1,25 @@
+# Local database backups: download the sample from Microsoft (see data/README.md).
+*.bak
+*.mdf
+*.ndf
+*.ldf
+
+# Power BI local caches, lock files, and user-specific settings.
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+**/.pbi/unappliedChanges.json
+*.pbix.lock
+*.pbit.lock
+~$*
+
+# Local tooling, original working copies, and credentials.
+.portfolio-work/
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+desktop.ini

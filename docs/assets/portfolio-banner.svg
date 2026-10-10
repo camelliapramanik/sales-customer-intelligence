@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+<title id="title">Sales and Customer Intelligence</title>
+<desc id="desc">Portfolio overview: SQL Server to Power BI. 121,317 sales lines, 31,465 orders, 19,119 customers, and 55 DAX measures. Data covers May 2022 through June 2025. This is an editorial banner, not a dashboard screenshot.</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0a2039"/><stop offset="1" stop-color="#114e87"/></linearGradient></defs>
+<rect width="1200" height="360" rx="20" fill="url(#bg)"/>
+<path d="M870 175 L930 145 L980 159 L1040 107 L1100 125 L1180 60" fill="none" stroke="#38cab6" stroke-width="3" opacity=".35"/>
+<g fill="#38cab6" opacity=".5"><circle cx="930" cy="145" r="4"/><circle cx="1040" cy="107" r="4"/><circle cx="1180" cy="60" r="4"/></g>
+<text x="48" y="46" fill="#6ee7d4" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2.5">BUSINESS INTELLIGENCE / PORTFOLIO</text>
+<text x="48" y="103" fill="#ffffff" font-family="Segoe UI,Arial,sans-serif" font-size="42" font-weight="700">Sales &amp; Customer Intelligence</text>
+<text x="48" y="144" fill="#c6d9eb" font-family="Segoe UI,Arial,sans-serif" font-size="19">From transactional data to sales, customer, product, and territory analysis.</text>
+<text x="48" y="181" fill="#a7c1d9" font-family="Segoe UI,Arial,sans-serif" font-size="15">SQL SERVER   /   POWER QUERY   /   DAX   /   POWER BI</text>
+<path d="M48 211 H1152" stroke="#7296b6" opacity=".35"/>
+<g fill="#ffffff" font-family="Segoe UI,Arial,sans-serif" font-size="32" font-weight="700"><text x="48" y="259">121,317</text><text x="336" y="259">31,465</text><text x="624" y="259">19,119</text><text x="912" y="259">55</text></g>
+<g fill="#b8cfe3" font-family="Segoe UI,Arial,sans-serif" font-size="14"><text x="48" y="286">SALES LINES</text><text x="336" y="286">ORDERS</text><text x="624" y="286">CUSTOMERS</text><text x="912" y="286">DAX MEASURES</text></g>
+<text x="48" y="333" fill="#89abc8" font-family="Segoe UI,Arial,sans-serif" font-size="12">MICROSOFT ADVENTUREWORKS SAMPLE DATA</text>
+<text x="1152" y="333" fill="#89abc8" font-family="Segoe UI,Arial,sans-serif" font-size="12" text-anchor="end">MAY 2022 — JUN 2025</text>
+</svg>

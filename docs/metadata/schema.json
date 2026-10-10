@@ -1,0 +1,292 @@
+[
+  {
+    "TableName": "DimCustomer",
+    "ColumnName": "CustomerID",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "DimCustomer",
+    "ColumnName": "AccountNumber",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimCustomer",
+    "ColumnName": "CustomerType",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimCustomer",
+    "ColumnName": "CustomerName",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimCustomer",
+    "ColumnName": "TerritoryID",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "DimCustomer",
+    "ColumnName": "TerritoryName",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimCustomer",
+    "ColumnName": "CountryRegionCode",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimCustomer",
+    "ColumnName": "TerritoryGroup",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimDate",
+    "ColumnName": "DateKey",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "DimDate",
+    "ColumnName": "FullDate",
+    "PandasDataType": "datetime64[ns]"
+  },
+  {
+    "TableName": "DimDate",
+    "ColumnName": "CalendarYear",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "DimDate",
+    "ColumnName": "QuarterNumber",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "DimDate",
+    "ColumnName": "QuarterName",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimDate",
+    "ColumnName": "MonthNumber",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "DimDate",
+    "ColumnName": "MonthName",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimDate",
+    "ColumnName": "MonthShortName",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimDate",
+    "ColumnName": "YearMonth",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimDate",
+    "ColumnName": "DayOfMonth",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "DimDate",
+    "ColumnName": "DayName",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimDate",
+    "ColumnName": "DayOfWeek",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "DimProduct",
+    "ColumnName": "ProductID",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "DimProduct",
+    "ColumnName": "ProductName",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimProduct",
+    "ColumnName": "ProductNumber",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimProduct",
+    "ColumnName": "Color",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimProduct",
+    "ColumnName": "StandardCost",
+    "PandasDataType": "decimal.Decimal"
+  },
+  {
+    "TableName": "DimProduct",
+    "ColumnName": "ListPrice",
+    "PandasDataType": "decimal.Decimal"
+  },
+  {
+    "TableName": "DimProduct",
+    "ColumnName": "Size",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimProduct",
+    "ColumnName": "ProductSubcategory",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimProduct",
+    "ColumnName": "ProductCategory",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimSalesPerson",
+    "ColumnName": "SalesPersonID",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "DimSalesPerson",
+    "ColumnName": "SalesPersonName",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimSalesPerson",
+    "ColumnName": "SalesQuota",
+    "PandasDataType": "decimal.Decimal"
+  },
+  {
+    "TableName": "DimSalesPerson",
+    "ColumnName": "Bonus",
+    "PandasDataType": "decimal.Decimal"
+  },
+  {
+    "TableName": "DimSalesPerson",
+    "ColumnName": "CommissionPct",
+    "PandasDataType": "decimal.Decimal"
+  },
+  {
+    "TableName": "DimTerritory",
+    "ColumnName": "TerritoryID",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "DimTerritory",
+    "ColumnName": "TerritoryName",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimTerritory",
+    "ColumnName": "CountryRegionCode",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "DimTerritory",
+    "ColumnName": "TerritoryGroup",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "SalesOrderDetailID",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "SalesOrderID",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "OrderDateKey",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "OrderDate",
+    "PandasDataType": "datetime64[ns]"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "DueDate",
+    "PandasDataType": "datetime64[ns]"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "ShipDate",
+    "PandasDataType": "datetime64[ns]"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "CustomerID",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "SalesPersonID",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "TerritoryID",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "ProductID",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "SalesChannel",
+    "PandasDataType": "string"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "OrderQty",
+    "PandasDataType": "Int64"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "UnitPrice",
+    "PandasDataType": "decimal.Decimal"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "UnitPriceDiscount",
+    "PandasDataType": "decimal.Decimal"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "GrossSales",
+    "PandasDataType": "decimal.Decimal"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "DiscountAmount",
+    "PandasDataType": "decimal.Decimal"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "SalesAmount",
+    "PandasDataType": "decimal.Decimal"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "TotalProductCost",
+    "PandasDataType": "decimal.Decimal"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "Profit",
+    "PandasDataType": "decimal.Decimal"
+  },
+  {
+    "TableName": "FactSales",
+    "ColumnName": "UnitStandardCost",
+    "PandasDataType": "Float64"
+  }
+]

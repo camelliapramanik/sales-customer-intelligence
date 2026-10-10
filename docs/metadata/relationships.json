@@ -1,0 +1,62 @@
+[
+  {
+    "FromTableName": "FactSales",
+    "FromColumnName": "CustomerID",
+    "ToTableName": "DimCustomer",
+    "ToColumnName": "CustomerID",
+    "IsActive": 1,
+    "Cardinality": "M:1",
+    "CrossFilteringBehavior": "Single",
+    "FromKeyCount": 19122,
+    "ToKeyCount": null,
+    "RelyOnReferentialIntegrity": 0
+  },
+  {
+    "FromTableName": "FactSales",
+    "FromColumnName": "ProductID",
+    "ToTableName": "DimProduct",
+    "ToColumnName": "ProductID",
+    "IsActive": 1,
+    "Cardinality": "M:1",
+    "CrossFilteringBehavior": "Single",
+    "FromKeyCount": 269,
+    "ToKeyCount": null,
+    "RelyOnReferentialIntegrity": 0
+  },
+  {
+    "FromTableName": "FactSales",
+    "FromColumnName": "SalesPersonID",
+    "ToTableName": "DimSalesPerson",
+    "ToColumnName": "SalesPersonID",
+    "IsActive": 1,
+    "Cardinality": "M:1",
+    "CrossFilteringBehavior": "Single",
+    "FromKeyCount": 21,
+    "ToKeyCount": null,
+    "RelyOnReferentialIntegrity": 0
+  },
+  {
+    "FromTableName": "FactSales",
+    "FromColumnName": "OrderDateKey",
+    "ToTableName": "DimDate",
+    "ToColumnName": "DateKey",
+    "IsActive": 1,
+    "Cardinality": "M:1",
+    "CrossFilteringBehavior": "Single",
+    "FromKeyCount": 1127,
+    "ToKeyCount": null,
+    "RelyOnReferentialIntegrity": 0
+  },
+  {
+    "FromTableName": "FactSales",
+    "FromColumnName": "TerritoryID",
+    "ToTableName": "DimTerritory",
+    "ToColumnName": "TerritoryID",
+    "IsActive": 1,
+    "Cardinality": "M:1",
+    "CrossFilteringBehavior": "Single",
+    "FromKeyCount": 13,
+    "ToKeyCount": null,
+    "RelyOnReferentialIntegrity": 0
+  }
+]

@@ -1,0 +1,10 @@
+* text=auto
+*.md text eol=lf
+*.sql text eol=lf
+*.dax text eol=lf
+*.m text eol=lf
+*.json text eol=lf
+*.svg text eol=lf
+*.pbix binary
+*.png binary
+*.bak binary

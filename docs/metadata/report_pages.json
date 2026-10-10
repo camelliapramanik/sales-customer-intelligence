@@ -1,0 +1,540 @@
+[
+  {
+    "name": "EXECUTIVE OVERVIEW",
+    "visibility": "Visible",
+    "visuals": [
+      {
+        "type": "barChart",
+        "title": "Sales by Territory",
+        "fields": [
+          "DimTerritory.TerritoryName",
+          "_Measures.Total Sales"
+        ]
+      },
+      {
+        "type": "clusteredBarChart",
+        "title": "Sales by Product Category",
+        "fields": [
+          "DimProduct.ProductCategory",
+          "_Measures.Total Sales"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Profit Margin %"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Total Customers"
+        ]
+      },
+      {
+        "type": "slicer",
+        "title": "Year",
+        "fields": [
+          "DimDate.CalendarYear"
+        ]
+      },
+      {
+        "type": "lineChart",
+        "title": "Monthly Sales Trend",
+        "fields": [
+          "DimDate.YearMonth",
+          "_Measures.Total Sales"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Total Profit"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Average Order Value"
+        ]
+      },
+      {
+        "type": "actionButton",
+        "title": "",
+        "fields": []
+      },
+      {
+        "type": "slicer",
+        "title": "Sales Channel",
+        "fields": [
+          "FactSales.SalesChannel"
+        ]
+      },
+      {
+        "type": "pageNavigator",
+        "title": "",
+        "fields": []
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Total Sales"
+        ]
+      },
+      {
+        "type": "donutChart",
+        "title": "Sales by Channel",
+        "fields": [
+          "FactSales.SalesChannel",
+          "_Measures.Total Sales"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Total Orders"
+        ]
+      },
+      {
+        "type": "slicer",
+        "title": "Product Category",
+        "fields": [
+          "DimProduct.ProductCategory"
+        ]
+      },
+      {
+        "type": "slicer",
+        "title": "Territory ",
+        "fields": [
+          "DimTerritory.TerritoryName"
+        ]
+      },
+      {
+        "type": "textbox",
+        "title": "",
+        "fields": []
+      }
+    ]
+  },
+  {
+    "name": "CUSTOMER ANALYTICS",
+    "visibility": "Visible",
+    "visuals": [
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Active Customers"
+        ]
+      },
+      {
+        "type": "slicer",
+        "title": "Year",
+        "fields": [
+          "DimDate.CalendarYear"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Customer Base"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Inactive Customers"
+        ]
+      },
+      {
+        "type": "slicer",
+        "title": "Territory ",
+        "fields": [
+          "DimTerritory.TerritoryName"
+        ]
+      },
+      {
+        "type": "lineChart",
+        "title": "New Customer Trend",
+        "fields": [
+          "DimDate.YearMonth",
+          "_Measures.New Customers"
+        ]
+      },
+      {
+        "type": "actionButton",
+        "title": "",
+        "fields": []
+      },
+      {
+        "type": "barChart",
+        "title": "Top 10 Customers by Lifetime Sales",
+        "fields": [
+          "DimCustomer.CustomerName",
+          "_Measures.Customer Lifetime Sales"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Avg Sales per Customer"
+        ]
+      },
+      {
+        "type": "slicer",
+        "title": "Sales Channel",
+        "fields": [
+          "FactSales.SalesChannel"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Repeat Customer Rate"
+        ]
+      },
+      {
+        "type": "slicer",
+        "title": "Product Category",
+        "fields": [
+          "DimCustomer.CustomerType"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Active Customer Rate"
+        ]
+      },
+      {
+        "type": "textbox",
+        "title": "",
+        "fields": []
+      },
+      {
+        "type": "pageNavigator",
+        "title": "",
+        "fields": []
+      },
+      {
+        "type": "tableEx",
+        "title": "Top Customers Details",
+        "fields": [
+          "DimCustomer.CustomerName",
+          "DimCustomer.CustomerType",
+          "_Measures.Customer Lifetime Sales",
+          "_Measures.Customer Lifetime Orders",
+          "_Measures.Customer Last Purchase Date Display",
+          "_Measures.Days Since Last Purchase Display",
+          "_Measures.Customer Status Display",
+          "_Measures.Customer Rank Display"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "PRODUCT PERFORMANCE",
+    "visibility": "Visible",
+    "visuals": [
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Total Profit"
+        ]
+      },
+      {
+        "type": "tableEx",
+        "title": "Product Performance Details",
+        "fields": [
+          "DimProduct.ProductName",
+          "DimProduct.ProductCategory",
+          "DimProduct.ProductSubcategory",
+          "_Measures.Total Sales",
+          "_Measures.Total Quantity Sold",
+          "_Measures.Total Profit",
+          "_Measures.Profit Margin %",
+          "_Measures.Avg Selling Price",
+          "_Measures.Product Contribution Display",
+          "_Measures.Product Rank"
+        ]
+      },
+      {
+        "type": "textbox",
+        "title": "",
+        "fields": []
+      },
+      {
+        "type": "slicer",
+        "title": "Product Category",
+        "fields": [
+          "DimProduct.ProductCategory"
+        ]
+      },
+      {
+        "type": "actionButton",
+        "title": "",
+        "fields": []
+      },
+      {
+        "type": "slicer",
+        "title": "Year",
+        "fields": [
+          "DimDate.CalendarYear"
+        ]
+      },
+      {
+        "type": "slicer",
+        "title": "Territory ",
+        "fields": [
+          "FactSales.SalesChannel"
+        ]
+      },
+      {
+        "type": "barChart",
+        "title": "Top 10 Products by Profit",
+        "fields": [
+          "DimProduct.ProductName",
+          "_Measures.Total Profit"
+        ]
+      },
+      {
+        "type": "barChart",
+        "title": "Top 10 Products by Sales",
+        "fields": [
+          "DimProduct.ProductName",
+          "_Measures.Total Sales"
+        ]
+      },
+      {
+        "type": "clusteredBarChart",
+        "title": "Sales by Product Subcategory",
+        "fields": [
+          "DimProduct.ProductSubcategory",
+          "_Measures.Total Sales"
+        ]
+      },
+      {
+        "type": "slicer",
+        "title": "Sales Channel",
+        "fields": [
+          "DimProduct.ProductSubcategory"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Profit Margin %"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Total Quantity Sold"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Total Sales"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Avg Selling Price"
+        ]
+      },
+      {
+        "type": "pageNavigator",
+        "title": "",
+        "fields": []
+      },
+      {
+        "type": "columnChart",
+        "title": "Top 10 Profit % by Subcategory",
+        "fields": [
+          "DimProduct.ProductSubcategory",
+          "_Measures.Profit Margin %"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Discount Rate %"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "TERRITORY & SALES PERFORMANCE",
+    "visibility": "Visible",
+    "visuals": [
+      {
+        "type": "textbox",
+        "title": "",
+        "fields": []
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Sales YoY % Comparable"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Total Sales"
+        ]
+      },
+      {
+        "type": "slicer",
+        "title": "Sales Channel",
+        "fields": [
+          "DimTerritory.TerritoryName"
+        ]
+      },
+      {
+        "type": "tableEx",
+        "title": "Salesperson Performance Details",
+        "fields": [
+          "DimSalesPerson.SalesPersonName",
+          "_Measures.Total Sales",
+          "_Measures.Total Profit",
+          "_Measures.Profit Margin %",
+          "_Measures.Total Orders",
+          "_Measures.Total Customers",
+          "_Measures.Average Order Value",
+          "_Measures.Salesperson Sales Contribution %",
+          "_Measures.Salesperson Rank"
+        ]
+      },
+      {
+        "type": "actionButton",
+        "title": "",
+        "fields": []
+      },
+      {
+        "type": "clusteredBarChart",
+        "title": "Sales by Territory",
+        "fields": [
+          "DimTerritory.TerritoryName",
+          "_Measures.Total Sales"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Total Profit"
+        ]
+      },
+      {
+        "type": "slicer",
+        "title": "Territory ",
+        "fields": [
+          "DimSalesPerson.SalesPersonName"
+        ]
+      },
+      {
+        "type": "barChart",
+        "title": "Top Salespeople by Sales",
+        "fields": [
+          "DimSalesPerson.SalesPersonName",
+          "_Measures.Total Sales"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Active Salespeople"
+        ]
+      },
+      {
+        "type": "barChart",
+        "title": "YoY Sales Growth by Territory",
+        "fields": [
+          "DimTerritory.TerritoryName",
+          "_Measures.Sales YoY % Comparable"
+        ]
+      },
+      {
+        "type": "slicer",
+        "title": "Product Category",
+        "fields": [
+          "DimTerritory.TerritoryGroup"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Avg Sales per Salesperson"
+        ]
+      },
+      {
+        "type": "card",
+        "title": "",
+        "fields": [
+          "_Measures.Profit Margin %"
+        ]
+      },
+      {
+        "type": "columnChart",
+        "title": "Sales Channel Mix by Region",
+        "fields": [
+          "DimTerritory.TerritoryGroup",
+          "FactSales.SalesChannel",
+          "_Measures.Total Sales"
+        ]
+      },
+      {
+        "type": "pageNavigator",
+        "title": "",
+        "fields": []
+      },
+      {
+        "type": "slicer",
+        "title": "Year",
+        "fields": [
+          "DimDate.CalendarYear"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "About This Report",
+    "visibility": "HiddenInViewMode",
+    "visuals": [
+      {
+        "type": "actionButton",
+        "title": "",
+        "fields": []
+      },
+      {
+        "type": "textbox",
+        "title": "",
+        "fields": []
+      }
+    ]
+  }
+]

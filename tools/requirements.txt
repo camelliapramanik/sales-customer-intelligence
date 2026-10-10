@@ -1,0 +1,2 @@
+# Optional documentation tooling; not needed to open the Power BI report.
+pbixray==0.15.5

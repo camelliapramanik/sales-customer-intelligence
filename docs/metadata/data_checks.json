@@ -1,0 +1,16 @@
+{
+  "duplicate_sales_detail_ids": 0,
+  "duplicate_keys_DimCustomer": 0,
+  "unmatched_rows_DimCustomer": 0,
+  "duplicate_keys_DimProduct": 0,
+  "unmatched_rows_DimProduct": 0,
+  "duplicate_keys_DimSalesPerson": 0,
+  "unmatched_rows_DimSalesPerson": 0,
+  "duplicate_keys_DimTerritory": 0,
+  "unmatched_rows_DimTerritory": 0,
+  "duplicate_keys_DimDate": 0,
+  "unmatched_rows_DimDate": 0,
+  "duplicate_customer_names": 16,
+  "missing_calendar_days": 0,
+  "profit_reconciliation_rows_over_one_cent": 0
+}

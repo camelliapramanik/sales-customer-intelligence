@@ -1,0 +1,645 @@
+// Extracted verbatim from the PBIX. Reference catalog, not a DAX query.
+// Create each measure separately in its original _Measures table.
+// Diagnostic measures are retained to keep this export faithful.
+
+// Table: _Measures
+Total Sales =
+SUM(FactSales[SalesAmount])
+
+// Table: _Measures
+Total Cost =
+SUM(FactSales[TotalProductCost])
+
+// Table: _Measures
+Total Profit =
+SUM(FactSales[Profit])
+
+// Table: _Measures
+Profit Margin % =
+DIVIDE(
+    [Total Profit],
+    [Total Sales],
+    0
+)
+
+// Table: _Measures
+Total Orders =
+DISTINCTCOUNT(FactSales[SalesOrderID])
+
+// Table: _Measures
+Total Customers =
+DISTINCTCOUNT(FactSales[CustomerID])
+
+// Table: _Measures
+Total Products =
+DISTINCTCOUNT(FactSales[ProductID])
+
+// Table: _Measures
+Total Quantity =
+SUM(FactSales[OrderQty])
+
+// Table: _Measures
+Average Order Value =
+DIVIDE(
+    [Total Sales],
+    [Total Orders],
+    0
+)
+
+// Table: _Measures
+Sales LY =
+CALCULATE(
+    [Total Sales],
+    SAMEPERIODLASTYEAR(DimDate[FullDate])
+)
+
+// Table: _Measures
+Sales YoY % Comparable =
+VAR SelectedYear =
+    SELECTEDVALUE(
+        DimDate[CalendarYear],
+        MAX(DimDate[CalendarYear])
+    )
+
+VAR DataStart =
+    CALCULATE(
+        MIN(FactSales[OrderDate]),
+        REMOVEFILTERS(DimDate)
+    )
+
+VAR DataEnd =
+    CALCULATE(
+        MAX(FactSales[OrderDate]),
+        REMOVEFILTERS(DimDate)
+    )
+
+VAR CurrentStart =
+    MAX(
+        DATE(SelectedYear, 1, 1),
+        DataStart
+    )
+
+VAR CurrentEnd =
+    MIN(
+        DATE(SelectedYear, 12, 31),
+        DataEnd
+    )
+
+VAR PreviousStart =
+    MAX(
+        DATE(SelectedYear - 1, 1, 1),
+        DataStart
+    )
+
+VAR PreviousEnd =
+    MIN(
+        DATE(SelectedYear - 1, 12, 31),
+        DataEnd
+    )
+
+VAR ComparableStart =
+    MAX(
+        CurrentStart,
+        EDATE(PreviousStart, 12)
+    )
+
+VAR ComparableEnd =
+    MIN(
+        CurrentEnd,
+        EDATE(PreviousEnd, 12)
+    )
+
+VAR PreviousComparableStart =
+    EDATE(ComparableStart, -12)
+
+VAR PreviousComparableEnd =
+    EDATE(ComparableEnd, -12)
+
+VAR CurrentSales =
+    CALCULATE(
+        [Total Sales],
+        REMOVEFILTERS(DimDate),
+        DATESBETWEEN(
+            DimDate[FullDate],
+            ComparableStart,
+            ComparableEnd
+        )
+    )
+
+VAR PreviousSales =
+    CALCULATE(
+        [Total Sales],
+        REMOVEFILTERS(DimDate),
+        DATESBETWEEN(
+            DimDate[FullDate],
+            PreviousComparableStart,
+            PreviousComparableEnd
+        )
+    )
+
+RETURN
+    IF(
+        SelectedYear <= YEAR(DataStart)
+            || PreviousComparableStart < DataStart,
+        BLANK(),
+        DIVIDE(
+            CurrentSales - PreviousSales,
+            PreviousSales
+        )
+    )
+
+// Table: _Measures
+Sales YTD =
+TOTALYTD(
+    [Total Sales],
+    DimDate[FullDate]
+)
+
+// Table: _Measures
+Sales MTD =
+TOTALMTD(
+    [Total Sales],
+    DimDate[FullDate]
+)
+
+// Table: _Measures
+Sales Rolling 30D =
+CALCULATE(
+    [Total Sales],
+    DATESINPERIOD(
+        DimDate[FullDate],
+        MAX(DimDate[FullDate]),
+        -30,
+        DAY
+    )
+)
+
+// Table: _Measures
+Analysis Date =
+MAX(DimDate[FullDate])
+
+// Table: _Measures
+Customer First Purchase Date =
+VAR AsOfDate = [Analysis Date]
+RETURN
+    CALCULATE(
+        MIN(FactSales[OrderDate]),
+        REMOVEFILTERS(DimDate),
+        DimDate[FullDate] <= AsOfDate
+    )
+
+// Table: _Measures
+Customer Last Purchase Date =
+VAR AsOfDate = [Analysis Date]
+RETURN
+    CALCULATE(
+        MAX(FactSales[OrderDate]),
+        REMOVEFILTERS(DimDate),
+        DimDate[FullDate] <= AsOfDate
+    )
+
+// Table: _Measures
+Days Since Last Purchase =
+VAR LastPurchase = [Customer Last Purchase Date]
+RETURN
+    IF(
+        NOT ISBLANK(LastPurchase),
+        DATEDIFF(
+            LastPurchase,
+            [Analysis Date],
+            DAY
+        )
+    )
+
+// Table: _Measures
+Customer Base =
+VAR AsOfDate = [Analysis Date]
+
+RETURN
+    COUNTROWS(
+        CALCULATETABLE(
+            VALUES(FactSales[CustomerID]),
+            REMOVEFILTERS(DimDate),
+            DimDate[FullDate] <= AsOfDate
+        )
+    )
+
+// Table: _Measures
+Active Customers =
+VAR AsOfDate = [Analysis Date]
+
+VAR CustomerList =
+    CALCULATETABLE(
+        VALUES(FactSales[CustomerID]),
+        REMOVEFILTERS(DimDate),
+        DimDate[FullDate] <= AsOfDate
+    )
+
+RETURN
+    COUNTROWS(
+        FILTER(
+            CustomerList,
+
+            VAR LastPurchase =
+                CALCULATE(
+                    MAX(FactSales[OrderDate]),
+                    REMOVEFILTERS(DimDate),
+                    DimDate[FullDate] <= AsOfDate
+                )
+
+            RETURN
+                DATEDIFF(
+                    LastPurchase,
+                    AsOfDate,
+                    DAY
+                ) <= 90
+        )
+    )
+
+// Table: _Measures
+Inactive Customers =
+VAR AsOfDate = [Analysis Date]
+
+VAR CustomerList =
+    CALCULATETABLE(
+        VALUES(FactSales[CustomerID]),
+        REMOVEFILTERS(DimDate),
+        DimDate[FullDate] <= AsOfDate
+    )
+
+RETURN
+    COUNTROWS(
+        FILTER(
+            CustomerList,
+
+            VAR LastPurchase =
+                CALCULATE(
+                    MAX(FactSales[OrderDate]),
+                    REMOVEFILTERS(DimDate),
+                    DimDate[FullDate] <= AsOfDate
+                )
+
+            RETURN
+                DATEDIFF(
+                    LastPurchase,
+                    AsOfDate,
+                    DAY
+                ) > 90
+        )
+    )
+
+// Table: _Measures
+Active Customer Rate =
+DIVIDE(
+    [Active Customers],
+    [Customer Base],
+    0
+)
+
+// Table: _Measures
+Repeat Customers =
+VAR AsOfDate = [Analysis Date]
+
+VAR CustomerList =
+    CALCULATETABLE(
+        VALUES(FactSales[CustomerID]),
+        REMOVEFILTERS(DimDate),
+        DimDate[FullDate] <= AsOfDate
+    )
+
+RETURN
+    COUNTROWS(
+        FILTER(
+            CustomerList,
+
+            VAR Orders =
+                CALCULATE(
+                    DISTINCTCOUNT(FactSales[SalesOrderID]),
+                    REMOVEFILTERS(DimDate),
+                    DimDate[FullDate] <= AsOfDate
+                )
+
+            RETURN Orders > 1
+        )
+    )
+
+// Table: _Measures
+Repeat Customer Rate =
+DIVIDE(
+    [Repeat Customers],
+    [Customer Base],
+    0
+)
+
+// Table: _Measures
+Avg Sales per Customer =
+DIVIDE(
+    [Total Sales],
+    [Total Customers],
+    0
+)
+
+// Table: _Measures
+Customer Lifetime Sales =
+VAR AsOfDate = [Analysis Date]
+
+RETURN
+    CALCULATE(
+        [Total Sales],
+        REMOVEFILTERS(DimDate),
+        DimDate[FullDate] <= AsOfDate
+    )
+
+// Table: _Measures
+Customer Lifetime Orders =
+VAR AsOfDate = [Analysis Date]
+
+RETURN
+    CALCULATE(
+        [Total Orders],
+        REMOVEFILTERS(DimDate),
+        DimDate[FullDate] <= AsOfDate
+    )
+
+// Table: _Measures
+Customer Status =
+IF(
+    [Days Since Last Purchase] > 90,
+    "Inactive",
+    "Active"
+)
+
+// Table: _Measures
+Customer Rank =
+VAR CurrentCustomerSales =
+    [Customer Lifetime Sales]
+
+RETURN
+    RANKX(
+        ALLSELECTED(DimCustomer),
+        [Customer Lifetime Sales],
+        CurrentCustomerSales,
+        DESC,
+        DENSE
+    )
+
+// Table: _Measures
+New Customers =
+VAR PeriodStart =
+    MIN(DimDate[FullDate])
+
+VAR PeriodEnd =
+    MAX(DimDate[FullDate])
+
+VAR CustomerList =
+    CALCULATETABLE(
+        VALUES(FactSales[CustomerID]),
+        REMOVEFILTERS(DimDate),
+        DimDate[FullDate] <= PeriodEnd
+    )
+
+RETURN
+    COUNTROWS(
+        FILTER(
+            CustomerList,
+
+            VAR FirstPurchase =
+                CALCULATE(
+                    MIN(FactSales[OrderDate]),
+                    REMOVEFILTERS(DimDate)
+                )
+
+            RETURN
+                FirstPurchase >= PeriodStart
+                    &&
+                FirstPurchase <= PeriodEnd
+        )
+    )
+
+// Table: _Measures
+Customer Last Purchase Date Display =
+IF(
+    ISINSCOPE(DimCustomer[CustomerName]),
+    [Customer Last Purchase Date],
+    BLANK()
+)
+
+// Table: _Measures
+Days Since Last Purchase Display =
+IF(
+    ISINSCOPE(DimCustomer[CustomerName]),
+    [Days Since Last Purchase],
+    BLANK()
+)
+
+// Table: _Measures
+Customer Status Display =
+IF(
+    ISINSCOPE(DimCustomer[CustomerName]),
+    [Customer Status],
+    BLANK()
+)
+
+// Table: _Measures
+Customer Rank Display =
+IF(
+    ISINSCOPE(DimCustomer[CustomerName]),
+    [Customer Rank],
+    BLANK()
+)
+
+// Table: _Measures
+Gross Sales =
+SUM(FactSales[GrossSales])
+
+// Table: _Measures
+Discount Amount =
+SUM(FactSales[DiscountAmount])
+
+// Table: _Measures
+Discount Rate % =
+DIVIDE(
+    [Discount Amount],
+    [Gross Sales],
+    0
+)
+
+// Table: _Measures
+Total Quantity Sold =
+SUM(FactSales[OrderQty])
+
+// Table: _Measures
+Avg Selling Price =
+DIVIDE(
+    [Total Sales],
+    [Total Quantity Sold],
+    0
+)
+
+// Table: _Measures
+Product Sales Contribution % =
+DIVIDE(
+    [Total Sales],
+    CALCULATE(
+        [Total Sales],
+        ALLSELECTED(DimProduct[ProductName])
+    ),
+    0
+)
+
+// Table: _Measures
+Product Profit Rank =
+VAR CurrentProfit =
+    [Total Profit]
+
+VAR ProductSet =
+    CALCULATETABLE(
+        VALUES(DimProduct[ProductID]),
+        ALLSELECTED(DimProduct)
+    )
+
+RETURN
+    RANKX(
+        ProductSet,
+        CALCULATE([Total Profit]),
+        CurrentProfit,
+        DESC,
+        DENSE
+    )
+
+// Table: _Measures
+Product Rank Display =
+IF(
+    ISINSCOPE(DimProduct[ProductName]),
+    [Product Rank],
+    BLANK()
+)
+
+// Table: _Measures
+Product Contribution Display =
+IF(
+    ISINSCOPE(DimProduct[ProductName]),
+    [Product Sales Contribution %],
+    BLANK()
+)
+
+// Table: _Measures
+Product Rank =
+IF(
+    ISINSCOPE(DimProduct[ProductName]),
+    RANKX(
+        ALLSELECTED(DimProduct),
+        [Total Sales],
+        ,
+        DESC,
+        DENSE
+    ),
+    BLANK()
+)
+
+// Table: _Measures
+Active Salespeople =
+CALCULATE(
+    DISTINCTCOUNT(FactSales[SalesPersonID]),
+    FactSales[SalesPersonID] <> -1
+)
+
+// Table: _Measures
+Reseller Sales =
+CALCULATE(
+    [Total Sales],
+    FactSales[SalesChannel] = "Reseller"
+)
+
+// Table: _Measures
+Reseller Orders =
+CALCULATE(
+    [Total Orders],
+    FactSales[SalesChannel] = "Reseller"
+)
+
+// Table: _Measures
+Reseller Profit =
+CALCULATE(
+    [Total Profit],
+    FactSales[SalesChannel] = "Reseller"
+)
+
+// Table: _Measures
+Avg Sales per Salesperson =
+DIVIDE(
+    [Reseller Sales],
+    [Active Salespeople],
+    0
+)
+
+// Table: _Measures
+Salesperson Rank =
+IF(
+    ISINSCOPE(DimSalesPerson[SalesPersonName]),
+
+    RANKX(
+        FILTER(
+            ALLSELECTED(DimSalesPerson),
+            DimSalesPerson[SalesPersonID] <> -1
+        ),
+        [Total Sales],
+        ,
+        DESC,
+        DENSE
+    ),
+
+    BLANK()
+)
+
+// Table: _Measures
+Salesperson Sales Contribution % =
+IF(
+    ISINSCOPE(DimSalesPerson[SalesPersonName]),
+
+    DIVIDE(
+        [Total Sales],
+
+        CALCULATE(
+            [Total Sales],
+            FILTER(
+                ALLSELECTED(DimSalesPerson),
+                DimSalesPerson[SalesPersonID] <> -1
+            )
+        ),
+
+        0
+    ),
+
+    BLANK()
+)
+
+// Table: _Measures
+Sales YoY % Display =
+IF(
+    HASONEVALUE(DimDate[CalendarYear]),
+    [Sales YoY % Comparable],
+    BLANK()
+)
+
+// Table: _Measures
+Selected Year Test =
+SELECTEDVALUE(
+    DimDate[CalendarYear],
+    9999
+)
+
+// Table: _Measures
+Current Sales Test =
+[Total Sales]
+
+// Table: _Measures
+Previous Year Sales Test =
+CALCULATE(
+    [Total Sales],
+    DATEADD(
+        DimDate[FullDate],
+        -1,
+        YEAR
+    )
+)

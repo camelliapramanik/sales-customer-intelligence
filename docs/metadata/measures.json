@@ -1,0 +1,387 @@
+[
+  {
+    "TableName": "_Measures",
+    "Name": "Total Sales",
+    "Expression": "\nSUM(FactSales[SalesAmount])",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Total Cost",
+    "Expression": "\nSUM(FactSales[TotalProductCost])",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Total Profit",
+    "Expression": "\nSUM(FactSales[Profit])",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Profit Margin %",
+    "Expression": "\nDIVIDE(\n    [Total Profit],\n    [Total Sales],\n    0\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Total Orders",
+    "Expression": "\nDISTINCTCOUNT(FactSales[SalesOrderID])",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Total Customers",
+    "Expression": "\nDISTINCTCOUNT(FactSales[CustomerID])",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Total Products",
+    "Expression": "\nDISTINCTCOUNT(FactSales[ProductID])",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Total Quantity",
+    "Expression": "\nSUM(FactSales[OrderQty])",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Average Order Value",
+    "Expression": "\nDIVIDE(\n    [Total Sales],\n    [Total Orders],\n    0\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Sales LY",
+    "Expression": "\nCALCULATE(\n    [Total Sales],\n    SAMEPERIODLASTYEAR(DimDate[FullDate])\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Sales YoY % Comparable",
+    "Expression": "\nVAR SelectedYear =\n    SELECTEDVALUE(\n        DimDate[CalendarYear],\n        MAX(DimDate[CalendarYear])\n    )\n\nVAR DataStart =\n    CALCULATE(\n        MIN(FactSales[OrderDate]),\n        REMOVEFILTERS(DimDate)\n    )\n\nVAR DataEnd =\n    CALCULATE(\n        MAX(FactSales[OrderDate]),\n        REMOVEFILTERS(DimDate)\n    )\n\nVAR CurrentStart =\n    MAX(\n        DATE(SelectedYear, 1, 1),\n        DataStart\n    )\n\nVAR CurrentEnd =\n    MIN(\n        DATE(SelectedYear, 12, 31),\n        DataEnd\n    )\n\nVAR PreviousStart =\n    MAX(\n        DATE(SelectedYear - 1, 1, 1),\n        DataStart\n    )\n\nVAR PreviousEnd =\n    MIN(\n        DATE(SelectedYear - 1, 12, 31),\n        DataEnd\n    )\n\nVAR ComparableStart =\n    MAX(\n        CurrentStart,\n        EDATE(PreviousStart, 12)\n    )\n\nVAR ComparableEnd =\n    MIN(\n        CurrentEnd,\n        EDATE(PreviousEnd, 12)\n    )\n\nVAR PreviousComparableStart =\n    EDATE(ComparableStart, -12)\n\nVAR PreviousComparableEnd =\n    EDATE(ComparableEnd, -12)\n\nVAR CurrentSales =\n    CALCULATE(\n        [Total Sales],\n        REMOVEFILTERS(DimDate),\n        DATESBETWEEN(\n            DimDate[FullDate],\n            ComparableStart,\n            ComparableEnd\n        )\n    )\n\nVAR PreviousSales =\n    CALCULATE(\n        [Total Sales],\n        REMOVEFILTERS(DimDate),\n        DATESBETWEEN(\n            DimDate[FullDate],\n            PreviousComparableStart,\n            PreviousComparableEnd\n        )\n    )\n\nRETURN\n    IF(\n        SelectedYear <= YEAR(DataStart)\n            || PreviousComparableStart < DataStart,\n        BLANK(),\n        DIVIDE(\n            CurrentSales - PreviousSales,\n            PreviousSales\n        )\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Sales YTD",
+    "Expression": "\nTOTALYTD(\n    [Total Sales],\n    DimDate[FullDate]\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Sales MTD",
+    "Expression": "\nTOTALMTD(\n    [Total Sales],\n    DimDate[FullDate]\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Sales Rolling 30D",
+    "Expression": "\nCALCULATE(\n    [Total Sales],\n    DATESINPERIOD(\n        DimDate[FullDate],\n        MAX(DimDate[FullDate]),\n        -30,\n        DAY\n    )\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Analysis Date",
+    "Expression": "\nMAX(DimDate[FullDate])",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Customer First Purchase Date",
+    "Expression": "\nVAR AsOfDate = [Analysis Date]\nRETURN\n    CALCULATE(\n        MIN(FactSales[OrderDate]),\n        REMOVEFILTERS(DimDate),\n        DimDate[FullDate] <= AsOfDate\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Customer Last Purchase Date",
+    "Expression": "\nVAR AsOfDate = [Analysis Date]\nRETURN\n    CALCULATE(\n        MAX(FactSales[OrderDate]),\n        REMOVEFILTERS(DimDate),\n        DimDate[FullDate] <= AsOfDate\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Days Since Last Purchase",
+    "Expression": "\nVAR LastPurchase = [Customer Last Purchase Date]\nRETURN\n    IF(\n        NOT ISBLANK(LastPurchase),\n        DATEDIFF(\n            LastPurchase,\n            [Analysis Date],\n            DAY\n        )\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Customer Base",
+    "Expression": "\nVAR AsOfDate = [Analysis Date]\n\nRETURN\n    COUNTROWS(\n        CALCULATETABLE(\n            VALUES(FactSales[CustomerID]),\n            REMOVEFILTERS(DimDate),\n            DimDate[FullDate] <= AsOfDate\n        )\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Active Customers",
+    "Expression": "\nVAR AsOfDate = [Analysis Date]\n\nVAR CustomerList =\n    CALCULATETABLE(\n        VALUES(FactSales[CustomerID]),\n        REMOVEFILTERS(DimDate),\n        DimDate[FullDate] <= AsOfDate\n    )\n\nRETURN\n    COUNTROWS(\n        FILTER(\n            CustomerList,\n\n            VAR LastPurchase =\n                CALCULATE(\n                    MAX(FactSales[OrderDate]),\n                    REMOVEFILTERS(DimDate),\n                    DimDate[FullDate] <= AsOfDate\n                )\n\n            RETURN\n                DATEDIFF(\n                    LastPurchase,\n                    AsOfDate,\n                    DAY\n                ) <= 90\n        )\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Inactive Customers",
+    "Expression": "\nVAR AsOfDate = [Analysis Date]\n\nVAR CustomerList =\n    CALCULATETABLE(\n        VALUES(FactSales[CustomerID]),\n        REMOVEFILTERS(DimDate),\n        DimDate[FullDate] <= AsOfDate\n    )\n\nRETURN\n    COUNTROWS(\n        FILTER(\n            CustomerList,\n\n            VAR LastPurchase =\n                CALCULATE(\n                    MAX(FactSales[OrderDate]),\n                    REMOVEFILTERS(DimDate),\n                    DimDate[FullDate] <= AsOfDate\n                )\n\n            RETURN\n                DATEDIFF(\n                    LastPurchase,\n                    AsOfDate,\n                    DAY\n                ) > 90\n        )\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Active Customer Rate",
+    "Expression": "\nDIVIDE(\n    [Active Customers],\n    [Customer Base],\n    0\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Repeat Customers",
+    "Expression": "\nVAR AsOfDate = [Analysis Date]\n\nVAR CustomerList =\n    CALCULATETABLE(\n        VALUES(FactSales[CustomerID]),\n        REMOVEFILTERS(DimDate),\n        DimDate[FullDate] <= AsOfDate\n    )\n\nRETURN\n    COUNTROWS(\n        FILTER(\n            CustomerList,\n\n            VAR Orders =\n                CALCULATE(\n                    DISTINCTCOUNT(FactSales[SalesOrderID]),\n                    REMOVEFILTERS(DimDate),\n                    DimDate[FullDate] <= AsOfDate\n                )\n\n            RETURN Orders > 1\n        )\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Repeat Customer Rate",
+    "Expression": "\nDIVIDE(\n    [Repeat Customers],\n    [Customer Base],\n    0\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Avg Sales per Customer",
+    "Expression": "\nDIVIDE(\n    [Total Sales],\n    [Total Customers],\n    0\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Customer Lifetime Sales",
+    "Expression": "\nVAR AsOfDate = [Analysis Date]\n\nRETURN\n    CALCULATE(\n        [Total Sales],\n        REMOVEFILTERS(DimDate),\n        DimDate[FullDate] <= AsOfDate\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Customer Lifetime Orders",
+    "Expression": "\nVAR AsOfDate = [Analysis Date]\n\nRETURN\n    CALCULATE(\n        [Total Orders],\n        REMOVEFILTERS(DimDate),\n        DimDate[FullDate] <= AsOfDate\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Customer Status",
+    "Expression": "\nIF(\n    [Days Since Last Purchase] > 90,\n    \"Inactive\",\n    \"Active\"\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Customer Rank",
+    "Expression": "\nVAR CurrentCustomerSales =\n    [Customer Lifetime Sales]\n\nRETURN\n    RANKX(\n        ALLSELECTED(DimCustomer),\n        [Customer Lifetime Sales],\n        CurrentCustomerSales,\n        DESC,\n        DENSE\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "New Customers",
+    "Expression": "\nVAR PeriodStart =\n    MIN(DimDate[FullDate])\n\nVAR PeriodEnd =\n    MAX(DimDate[FullDate])\n\nVAR CustomerList =\n    CALCULATETABLE(\n        VALUES(FactSales[CustomerID]),\n        REMOVEFILTERS(DimDate),\n        DimDate[FullDate] <= PeriodEnd\n    )\n\nRETURN\n    COUNTROWS(\n        FILTER(\n            CustomerList,\n\n            VAR FirstPurchase =\n                CALCULATE(\n                    MIN(FactSales[OrderDate]),\n                    REMOVEFILTERS(DimDate)\n                )\n\n            RETURN\n                FirstPurchase >= PeriodStart\n                    &&\n                FirstPurchase <= PeriodEnd\n        )\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Customer Last Purchase Date Display",
+    "Expression": "\nIF(\n    ISINSCOPE(DimCustomer[CustomerName]),\n    [Customer Last Purchase Date],\n    BLANK()\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Days Since Last Purchase Display",
+    "Expression": "\nIF(\n    ISINSCOPE(DimCustomer[CustomerName]),\n    [Days Since Last Purchase],\n    BLANK()\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Customer Status Display",
+    "Expression": "\nIF(\n    ISINSCOPE(DimCustomer[CustomerName]),\n    [Customer Status],\n    BLANK()\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Customer Rank Display",
+    "Expression": "\nIF(\n    ISINSCOPE(DimCustomer[CustomerName]),\n    [Customer Rank],\n    BLANK()\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Gross Sales",
+    "Expression": "\nSUM(FactSales[GrossSales])",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Discount Amount",
+    "Expression": "\nSUM(FactSales[DiscountAmount])",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Discount Rate %",
+    "Expression": "\nDIVIDE(\n    [Discount Amount],\n    [Gross Sales],\n    0\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Total Quantity Sold",
+    "Expression": "\nSUM(FactSales[OrderQty])",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Avg Selling Price",
+    "Expression": "\nDIVIDE(\n    [Total Sales],\n    [Total Quantity Sold],\n    0\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Product Sales Contribution %",
+    "Expression": "\nDIVIDE(\n    [Total Sales],\n    CALCULATE(\n        [Total Sales],\n        ALLSELECTED(DimProduct[ProductName])\n    ),\n    0\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Product Profit Rank",
+    "Expression": "\nVAR CurrentProfit =\n    [Total Profit]\n\nVAR ProductSet =\n    CALCULATETABLE(\n        VALUES(DimProduct[ProductID]),\n        ALLSELECTED(DimProduct)\n    )\n\nRETURN\n    RANKX(\n        ProductSet,\n        CALCULATE([Total Profit]),\n        CurrentProfit,\n        DESC,\n        DENSE\n    )",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Product Rank Display",
+    "Expression": "\nIF(\n    ISINSCOPE(DimProduct[ProductName]),\n    [Product Rank],\n    BLANK()\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Product Contribution Display",
+    "Expression": "\nIF(\n    ISINSCOPE(DimProduct[ProductName]),\n    [Product Sales Contribution %],\n    BLANK()\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Product Rank",
+    "Expression": "\nIF(\n    ISINSCOPE(DimProduct[ProductName]),\n    RANKX(\n        ALLSELECTED(DimProduct),\n        [Total Sales],\n        ,\n        DESC,\n        DENSE\n    ),\n    BLANK()\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Active Salespeople",
+    "Expression": "\nCALCULATE(\n    DISTINCTCOUNT(FactSales[SalesPersonID]),\n    FactSales[SalesPersonID] <> -1\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Reseller Sales",
+    "Expression": "\nCALCULATE(\n    [Total Sales],\n    FactSales[SalesChannel] = \"Reseller\"\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Reseller Orders",
+    "Expression": "\nCALCULATE(\n    [Total Orders],\n    FactSales[SalesChannel] = \"Reseller\"\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Reseller Profit",
+    "Expression": "\nCALCULATE(\n    [Total Profit],\n    FactSales[SalesChannel] = \"Reseller\"\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Avg Sales per Salesperson",
+    "Expression": "\nDIVIDE(\n    [Reseller Sales],\n    [Active Salespeople],\n    0\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Salesperson Rank",
+    "Expression": "\nIF(\n    ISINSCOPE(DimSalesPerson[SalesPersonName]),\n\n    RANKX(\n        FILTER(\n            ALLSELECTED(DimSalesPerson),\n            DimSalesPerson[SalesPersonID] <> -1\n        ),\n        [Total Sales],\n        ,\n        DESC,\n        DENSE\n    ),\n\n    BLANK()\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Salesperson Sales Contribution %",
+    "Expression": "\nIF(\n    ISINSCOPE(DimSalesPerson[SalesPersonName]),\n\n    DIVIDE(\n        [Total Sales],\n\n        CALCULATE(\n            [Total Sales],\n            FILTER(\n                ALLSELECTED(DimSalesPerson),\n                DimSalesPerson[SalesPersonID] <> -1\n            )\n        ),\n\n        0\n    ),\n\n    BLANK()\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Sales YoY % Display",
+    "Expression": "\nIF(\n    HASONEVALUE(DimDate[CalendarYear]),\n    [Sales YoY % Comparable],\n    BLANK()\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Selected Year Test",
+    "Expression": "\nSELECTEDVALUE(\n    DimDate[CalendarYear],\n    9999\n)",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Current Sales Test",
+    "Expression": "\n[Total Sales]",
+    "DisplayFolder": null,
+    "Description": null
+  },
+  {
+    "TableName": "_Measures",
+    "Name": "Previous Year Sales Test",
+    "Expression": "\nCALCULATE(\n    [Total Sales],\n    DATEADD(\n        DimDate[FullDate],\n        -1,\n        YEAR\n    )\n)",
+    "DisplayFolder": null,
+    "Description": null
+  }
+]

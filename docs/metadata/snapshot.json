@@ -1,0 +1,117 @@
+{
+  "source": "Sales_Customer_Intelligence.pbix",
+  "pbix_sha256": "841df987d340d72893df89b191aafaca5cbe9dcc0ceb28e34e14dd0615d39bbf",
+  "scope": "Embedded imported data, all rows, no report filters; Python aggregates, not DAX engine output.",
+  "table_rows": {
+    "DimCustomer": 19119,
+    "DimDate": 1127,
+    "DimProduct": 266,
+    "DimSalesPerson": 18,
+    "DimTerritory": 10,
+    "FactSales": 121317
+  },
+  "measure_count": 55,
+  "order_date_min": "2022-05-30 00:00:00",
+  "order_date_max": "2025-06-29 00:00:00",
+  "orders": 31465,
+  "customers": 19119,
+  "products": 266,
+  "quantity": 274914,
+  "sales": 109846380.9,
+  "cost": 97288680.91,
+  "profit": 12557724.05,
+  "profit_margin": 0.11432078095892917,
+  "average_order_value": 3491.065657079295,
+  "ProductCategory": [
+    {
+      "ProductCategory": "Bikes",
+      "SalesAmount": "94651173.11",
+      "Profit": "10519290.10"
+    },
+    {
+      "ProductCategory": "Components",
+      "SalesAmount": "11802590.79",
+      "Profit": "1034118.55"
+    },
+    {
+      "ProductCategory": "Clothing",
+      "SalesAmount": "2120542.29",
+      "Profit": "369917.34"
+    },
+    {
+      "ProductCategory": "Accessories",
+      "SalesAmount": "1272074.71",
+      "Profit": "634398.06"
+    }
+  ],
+  "TerritoryName": [
+    {
+      "TerritoryName": "Southwest",
+      "SalesAmount": "24184609.96",
+      "Profit": "2356131.76"
+    },
+    {
+      "TerritoryName": "Canada",
+      "SalesAmount": "16355770.56",
+      "Profit": "1008139.13"
+    },
+    {
+      "TerritoryName": "Northwest",
+      "SalesAmount": "16084942.72",
+      "Profit": "1740519.40"
+    },
+    {
+      "TerritoryName": "Australia",
+      "SalesAmount": "10655335.57",
+      "Profit": "3577123.31"
+    },
+    {
+      "TerritoryName": "Central",
+      "SalesAmount": "7909008.90",
+      "Profit": "141909.73"
+    },
+    {
+      "TerritoryName": "Southeast",
+      "SalesAmount": "7879654.57",
+      "Profit": "125405.46"
+    },
+    {
+      "TerritoryName": "United Kingdom",
+      "SalesAmount": "7670721.10",
+      "Profit": "1396865.74"
+    },
+    {
+      "TerritoryName": "France",
+      "SalesAmount": "7251555.61",
+      "Profit": "1048949.71"
+    },
+    {
+      "TerritoryName": "Northeast",
+      "SalesAmount": "6939374.62",
+      "Profit": "80153.75"
+    },
+    {
+      "TerritoryName": "Germany",
+      "SalesAmount": "4915407.29",
+      "Profit": "1082526.06"
+    }
+  ],
+  "SalesChannel": [
+    {
+      "SalesChannel": "Online",
+      "SalesAmount": "29358677.89",
+      "Profit": "12080819.83"
+    },
+    {
+      "SalesChannel": "Reseller",
+      "SalesAmount": "80487703.01",
+      "Profit": "476904.22"
+    }
+  ],
+  "customer_activity": {
+    "as_of": "2025-06-29 00:00:00",
+    "active_within_90_days": 5111,
+    "inactive_over_90_days": 14008,
+    "repeat_customers": 7470
+  }
+}
