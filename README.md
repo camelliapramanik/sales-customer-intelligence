@@ -8,6 +8,14 @@ This project transforms Microsoft AdventureWorks transactional data into a sales
 
 [Explore the report](Power%20BI/Sales_Customer_Intelligence.pbix) · [Report walkthrough](docs/REPORT_GUIDE.md) · [SQL pipeline](SQL/README.md) · [DAX measures](DAX/Measures.dax) · [Setup instructions](docs/SETUP.md)
 
+## Project launch video
+
+[![Watch the Sales & Customer Intelligence launch video](docs/assets/launch-video-cover.jpg)](https://github.com/camelliapramanik/sales-customer-intelligence/raw/refs/heads/main/docs/assets/launch-video.mp4)
+
+**[Watch the 22-second launch video](https://github.com/camelliapramanik/sales-customer-intelligence/raw/refs/heads/main/docs/assets/launch-video.mp4)** — a 1080p introduction to the sales overview, Online-channel comparison, customer activity, and SQL-to-Power BI workflow.
+
+The video uses animated report previews built from the PBIX's imported AdventureWorks sample data. Profit figures are standard-cost estimates. Includes music; no narration.
+
 ## Business questions
 
 - How are sales, estimated profit, order value, and channel mix changing?
@@ -112,7 +120,7 @@ Sales_Customer_Intelligence_Portfolio/
 │   ├── METRICS.md
 │   ├── VALIDATION.md
 │   ├── PUBLISHING.md
-│   ├── assets/portfolio-banner.svg
+│   ├── assets/                      # Portfolio banner, launch video and cover
 │   └── metadata/                    # Extracted schema, relationships and results
 └── tools/                           # Optional repeatable PBIX documentation export
 ```
